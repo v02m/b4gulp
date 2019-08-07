@@ -1,147 +1,192 @@
-"use strict";
+// "use strict"; 
 
-const {src, dest } = require("gulp");
-const gulp = require("gulp");
-const autoprefixer = require("gulp-autoprefixer");
-const cssbeautify = require("gulp-cssbeautify");
+const gulp = require('gulp');
+const browserSync = require('browser-sync').create();
+const pug = require('gulp-pug');
+const sass = require('gulp-sass');
+const autoprefixer = require('gulp-autoprefixer');
 const removeComments = require('gulp-strip-css-comments');
-const rename = require("gulp-rename");
-const sass = require("gulp-sass");
-const cssnano = require("gulp-cssnano");
-const rigger = require("gulp-rigger");
-const uglify = require("gulp-uglify");
-const plumber = require("gulp-plumber");
-const imagemin = require("gulp-imagemin");
-const del = require("del");
-const panini = require("panini");
-const browsersync = require("browser-sync").create();
+const sourcemaps = require('gulp-sourcemaps');
+const rename = require('gulp-rename');
+const rigger = require('gulp-rigger');
+const uglify = require('gulp-uglify');
+const plumber = require('gulp-plumber');
+
+const imagemin = require('gulp-imagemin');
+const imageminGifsicle = require('imagemin-gifsicle');
+const imageminJpegRecompress = require('imagemin-jpeg-recompress');
+const imageminPngquant = require('imagemin-pngquant');
+const imageminSvgo = require('imagemin-svgo');
+
+
+const spritesmith = require('gulp.spritesmith');
+const rimraf = require('rimraf');
 
 
 
-/* Paths to source/build/watch files
-=========================*/
 
-var path = {
-    build: {
-        html: "dist/",
-        js: "dist/assets/js/",
-        css: "dist/assets/css/",
-        images: "dist/assets/i/"
-    },
-    src: {
-        html: "src/*.{htm,html,php}",
-        js: "src/assets/js/*.js",
-        css: "src/assets/scss/style.scss",
-        images: "src/assets/i/**/*.{jpg,png,svg,gif,ico}"
-    },
-    watch: {
-        html: "src/**/*.{htm,html,php}",
-        js: "src/assets/js/**/*.js",
-        css: "src/assets/scss/**/*.scss",
-        images: "src/assets/i/**/*.{jpg,png,svg,gif,ico}"
-    },
-    clean: "./dist"
-};
+/* ---      Server-------- */
 
-
-/* Tasks
-=========================*/
-
-function browserSync(done) {
-    browsersync.init({
+gulp.task('browser-sync', function () {
+    browserSync.init({
         server: {
-            baseDir: "./dist/"
+            
+            baseDir: './build'
         },
-        port: 3000
+        port: 9000
     });
-    done();
-}
 
-function browserSyncReload(done) {
-    browsersync.reload();
-    done();
-}
 
-function html() {
-    panini.refresh();
-    return src(path.src.html, {base: 'src/'})
-        .pipe(plumber())
-        .pipe(panini({
-            root: 'src/',
-            layouts: 'src/tpl/layouts/',
-            partials: 'src/tpl/partials/',
-            helpers: 'src/tpl/helpers/',
-            data: 'src/tpl/data/'
+    gulp.watch('build/**/*').on('change', browserSync.reload);
+});
+
+
+
+/*--------- Pug compile----------- */
+
+gulp.task('templates:compile', function buildHTML() {
+    return gulp.src('./src/templates/index.pug')
+        .pipe(pug({
+            // Your options in here.
+            pretty: true
         }))
-        .pipe(dest(path.build.html))
-        .pipe(browsersync.stream());
-}
+        .pipe(gulp.dest('./build'))
+});
 
-function css() {
-    return src(path.src.css, {base: './src/assets/scss/'})
-        .pipe(plumber())
-        .pipe(sass().on('error', sass.logError))
+
+
+
+/* ---------------Style compile ---------*/
+
+gulp.task('styles:compile', function () {
+    return gulp.src('./src/styles/main.scss')
+        // .pipe(sass({outputStyle:'compressed'}).on('error', sass.logError))
+        .pipe(sass({
+            outputStyle: 'expanded'
+        }).on('error', sass.logError))
         .pipe(autoprefixer({
             browsers: ["last 8 versions"],
             cascade: true
         }))
-        .pipe(cssbeautify())
-        .pipe(dest(path.build.css))
-        .pipe(cssnano({
-            zindex: false,
-            discardComments: {
-                removeAll: true
-            }
-        }))
+        .pipe(sourcemaps.write('.'))
         .pipe(removeComments())
-        .pipe(rename({
-            suffix: ".min",
-            extname: ".css"
-        }))
-        .pipe(dest(path.build.css))
-        .pipe(browsersync.stream());
-}
+        .pipe(rename('main.min.css'))
+        .pipe(gulp.dest('./build/css'));
+});
 
-function js() {
-    return src(path.src.js, {base: './src/assets/js/'})
+
+
+/* -------------JS--------------- */
+
+gulp.task('js:compile', function () {
+    return gulp.src('./src/js/*.js')
         .pipe(plumber())
-        .pipe(rigger())
-        .pipe(gulp.dest(path.build.js))
+        pipe(rigger())
+        .pipe(gulp.dest('./build/js'))
         .pipe(uglify())
         .pipe(rename({
             suffix: ".min",
             extname: ".js"
         }))
-        .pipe(dest(path.build.js))
-        .pipe(browsersync.stream());
-}
-
-function images() {
-    return src(path.src.images)
-        .pipe(dest(path.build.images));
-}
-
-function clean() {
-    return del(path.clean);
-}
-
-function watchFiles() {
-    gulp.watch([path.watch.html], html);
-    gulp.watch([path.watch.css], css);
-    gulp.watch([path.watch.js], js);
-    gulp.watch([path.watch.images], images);
-}
-
-const build = gulp.series(clean, gulp.parallel(html, css, js, images));
-const watch = gulp.parallel(build, watchFiles, browserSync);
+        .pipe(gulp.dest('./build/js/'));
+       // .pipe(browsersync.stream());
+});
 
 
-// export tasks
-exports.html = html;
-exports.css = css;
-exports.js = js;
-exports.images = images;
-exports.clean = clean;
-exports.build = build;
-exports.watch = watch;
-exports.default = watch;
+
+/* ---------- Sprite---------- */
+
+gulp.task('sprite', function (cb) {
+    const spriteData = gulp.src('./src/images/icons/*.png').pipe(spritesmith({
+        imgName: 'sprite.png',
+        imgPath: '../images/sprite.png',
+        cssName: 'sprite.scss'
+    }));
+
+    spriteData.img.pipe(gulp.dest('build/images/'));
+    spriteData.css.pipe(gulp.dest('./src/styles/global/'));
+    cb();
+});
+
+
+
+
+/* ----------------Copy fonts----------------- */
+
+gulp.task('copy:fonts', function () {
+    return gulp.src('./src/fonts/**/*.*')
+        .pipe(gulp.dest('./build/fonts'));
+});
+
+
+
+
+/* ----------------Copy images----------------- */
+ //Выберем наши картинки
+ //Копируем изображения заранее, imagemin может пропустить парочку )
+
+gulp.task('copy:images', function () {
+    return gulp.src('./src/images/**/*.*')
+        /* .pipe(debug({
+            title: 'building img:',
+            showFiles: true
+        })) */
+        .pipe(plumber())
+        .pipe(gulp.dest('./build/images')) 
+        .pipe(imagemin([
+            imageminGifsicle({
+                interlaced: true
+            }),
+            imageminJpegRecompress({
+                progressive: true,
+                max: 80,
+                min: 70
+            }),
+            imageminPngquant({
+                quality: '80'
+            }),
+            imageminSvgo({
+                plugins: [{
+                    removeViewBox: true
+                }]
+            })
+        ]))
+        .pipe(gulp.dest('./build/images')); //И бросим в prodaction отпимизированные изображения
+});
+
+
+
+
+/* ------------Copy-------------- */
+
+gulp.task('copy', gulp.parallel('copy:fonts', 'copy:images'));
+
+
+
+
+/* -------------Delete------------- */
+
+gulp.task('clean', function del(cb) {
+    return rimraf('build', cb)
+});
+
+
+
+
+/* ---------Watchers------------ */
+
+gulp.task('watch', function () {
+    gulp.watch('./src/template/**/*.pug', gulp.series('templates:compile'));
+    gulp.watch('./src/styles/**/*.scss', gulp.series('styles:compile'));
+});
+
+
+
+
+/* -------Default-------- */
+
+gulp.task('default', gulp.series(
+    'clean',
+    gulp.parallel('templates:compile', 'styles:compile', 'js:compile', 'sprite', 'copy'),
+    gulp.parallel('watch', 'browser-sync')
+));
