@@ -1,8 +1,8 @@
 {
-  "name": "project-name",
+  "name": "B4Gulp",
   "version": "1.0.0",
-  "description": "project-name",
-  "author": "Dmitry Valak",
+  "description": "v02m/b4gulp",
+  "author": "Valeius",
   "devDependencies": {
     "bootstrap": "^4.1.2",
     "browser-sync": "^2.24.5",
