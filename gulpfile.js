@@ -81,7 +81,7 @@ gulp.task('styles:compile', function () {
 gulp.task('js:compile', function () {
     return gulp.src('./src/js/*.js')
         .pipe(plumber())
-        pipe(rigger())
+        .pipe(rigger())
         .pipe(gulp.dest('./build/js'))
         .pipe(uglify())
         .pipe(rename({
@@ -176,8 +176,10 @@ gulp.task('clean', function del(cb) {
 /* ---------Watchers------------ */
 
 gulp.task('watch', function () {
-    gulp.watch('./src/template/**/*.pug', gulp.series('templates:compile'));
+    gulp.watch('./src/templates/**/*.pug', gulp.series('templates:compile'));
     gulp.watch('./src/styles/**/*.scss', gulp.series('styles:compile'));
+    gulp.watch('./src/js/*.js', gulp.series('js:compile'));
+    gulp.watch('./src/images/**/*.*', gulp.series('copy:images'));
 });
 
 

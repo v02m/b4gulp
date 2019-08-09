@@ -19,4 +19,35 @@ html(lang='ru')
         //- include sections/
         //- include sections/
         .container
-            h1 Bootstrap 4
+            .row
+                .col Column
+                .col Column
+                .w-100
+                .col Column
+                .col Column
+            .row
+                .col
+                    span(data-toggle="tooltip" data-placement="left" title="Tooltip on top") Lorem
+                    |  ipsum, dolor sit amet consectetur adipisicing elit. Nulla accusamus corporis repellat voluptatem officiis adipisci maxime quaerat, mollitia aliquam cumque minima asperiores assumenda corrupti ducimus nesciunt ex officia sint obcaecati.
+
+                .col
+                   button(type="button" class="btn btn-secondary" data-toggle="tooltip" data-placement="top" title="Tooltip on top") Tooltip on top
+
+                .col
+                    a(href="#" data-toggle="tooltip" title="Some tooltip text!") Hover over me
+
+                    <!-- Generated markup by the plugin -->
+                    .tooltip.bs-tooltip-top(role="tooltip")
+                        .arrow
+                        .tooltip-inner  Some tooltip text!
+            .row
+                .col
+                    button(type="button" class="btn btn-lg btn-danger" data-toggle="popover" title="Popover scam title" data-content="And here's some amazing content. It's very engaging. Right?") Click to toggle popover
+
+
+        // JS
+
+        script(src='js/main.js')
+
+
+

@@ -1,2 +1,9 @@
-@import "../../../node_modules/bootstrap/scss/bootstrap-reboot.scss";
-@import "../../../node_modules/bootstrap/scss/_grid.scss";
+@import "../../node_modules/bootstrap/scss/bootstrap-reboot.scss";
+@import "../../node_modules/bootstrap/scss/_utilities.scss";
+@import "../../node_modules/bootstrap/scss/_grid.scss";
+@import "../../node_modules/bootstrap/scss/_buttons";
+@import "../../node_modules/bootstrap/scss/_alert";
+@import "../../node_modules/bootstrap/scss/_badge";
+@import "../../node_modules/bootstrap/scss/tooltip.scss";
+@import "../../node_modules/bootstrap/scss/popover";
+@import "../../node_modules/bootstrap/scss/transitions";
