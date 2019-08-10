@@ -80,7 +80,7 @@ gulp.task('styles:compile', function () {
 /* -------------JS--------------- */
 
 gulp.task('js:compile', function () {
-    return gulp.src('./src/js/*.js')
+    return gulp.src(src+'/js/*.js')
         .pipe(plumber())
         .pipe(rigger())
         .pipe(gulp.dest(dist+'/js'))
@@ -98,14 +98,14 @@ gulp.task('js:compile', function () {
 /* ---------- Sprite---------- */
 
 gulp.task('sprite', function (cb) {
-    const spriteData = gulp.src('./src/images/icons/*.png').pipe(spritesmith({
+    const spriteData = gulp.src(src+'/images/icons/*.png').pipe(spritesmith({
         imgName: 'sprite.png',
         imgPath: '../images/sprite.png',
         cssName: 'sprite.scss'
     }));
 
     spriteData.img.pipe(gulp.dest(dist+'/images/'));
-    spriteData.css.pipe(gulp.dest('./src/styles/global/'));
+    spriteData.css.pipe(gulp.dest(src+'/styles/global/'));
     cb();
 });
 
@@ -115,7 +115,7 @@ gulp.task('sprite', function (cb) {
 /* ----------------Copy fonts----------------- */
 
 gulp.task('copy:fonts', function () {
-    return gulp.src('./src/fonts/**/*.*')
+    return gulp.src(src+'/fonts/**/*.*')
         .pipe(gulp.dest(dist+'/fonts'));
 });
 
@@ -127,7 +127,7 @@ gulp.task('copy:fonts', function () {
  //Копируем изображения заранее, imagemin может пропустить парочку )
 
 gulp.task('copy:images', function () {
-    return gulp.src('./src/images/**/*.*')
+    return gulp.src(src+'/images/**/*.*')
         /* .pipe(debug({
             title: 'building img:',
             showFiles: true
@@ -177,10 +177,10 @@ gulp.task('clean', function del(cb) {
 /* ---------Watchers------------ */
 
 gulp.task('watch', function () {
-    gulp.watch('./src/templates/**/*.pug', gulp.series('templates:compile'));
-    gulp.watch('./src/styles/**/*.scss', gulp.series('styles:compile'));
-    gulp.watch('./src/js/*.js', gulp.series('js:compile'));
-    gulp.watch('./src/images/**/*.*', gulp.series('copy:images'));
+    gulp.watch(src+'/templates/**/*.pug', gulp.series('templates:compile'));
+    gulp.watch(src+'/styles/**/*.scss', gulp.series('styles:compile'));
+    gulp.watch(src+'/js/*.js', gulp.series('js:compile'));
+    gulp.watch(src+'/images/**/*.*', gulp.series('copy:images'));
 });
 
 
