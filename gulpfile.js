@@ -123,8 +123,6 @@ gulp.task('copy:fonts', function () {
 
 
 /* ----------------Copy images----------------- */
- //Выберем наши картинки
- //Копируем изображения заранее, imagemin может пропустить парочку )
 
 gulp.task('copy:images', function () {
     return gulp.src(src+'/images/**/*.*')
@@ -144,7 +142,7 @@ gulp.task('copy:images', function () {
                 min: 70
             }),
             imageminPngquant({
-                quality: '80'
+                quality: [0.3, 0.8]
             }),
             imageminSvgo({
                 plugins: [{
