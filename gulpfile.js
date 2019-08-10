@@ -23,7 +23,8 @@ const spritesmith = require('gulp.spritesmith');
 const rimraf = require('rimraf');
 
 
-
+var dist = './dist';
+var src = './src';
 
 /* ---      Server-------- */
 
@@ -31,13 +32,13 @@ gulp.task('browser-sync', function () {
     browserSync.init({
         server: {
             
-            baseDir: './build'
+            baseDir: dist
         },
         port: 9000
     });
 
 
-    gulp.watch('build/**/*').on('change', browserSync.reload);
+    gulp.watch(dist+'/**/*').on('change', browserSync.reload);
 });
 
 
@@ -45,12 +46,12 @@ gulp.task('browser-sync', function () {
 /*--------- Pug compile----------- */
 
 gulp.task('templates:compile', function buildHTML() {
-    return gulp.src('./src/templates/index.pug')
+    return gulp.src(src+'/templates/index.pug')
         .pipe(pug({
             // Your options in here.
             pretty: true
         }))
-        .pipe(gulp.dest('./build'))
+        .pipe(gulp.dest(dist))
 });
 
 
@@ -59,7 +60,7 @@ gulp.task('templates:compile', function buildHTML() {
 /* ---------------Style compile ---------*/
 
 gulp.task('styles:compile', function () {
-    return gulp.src('./src/styles/main.scss')
+    return gulp.src(src+'/styles/main.scss')
         // .pipe(sass({outputStyle:'compressed'}).on('error', sass.logError))
         .pipe(sass({
             outputStyle: 'expanded'
@@ -71,7 +72,7 @@ gulp.task('styles:compile', function () {
         .pipe(sourcemaps.write('.'))
         .pipe(removeComments())
         .pipe(rename('main.min.css'))
-        .pipe(gulp.dest('./build/css'));
+        .pipe(gulp.dest(dist+'/css'));
 });
 
 
@@ -82,13 +83,13 @@ gulp.task('js:compile', function () {
     return gulp.src('./src/js/*.js')
         .pipe(plumber())
         .pipe(rigger())
-        .pipe(gulp.dest('./build/js'))
+        .pipe(gulp.dest(dist+'/js'))
         .pipe(uglify())
         .pipe(rename({
             suffix: ".min",
             extname: ".js"
         }))
-        .pipe(gulp.dest('./build/js/'));
+        .pipe(gulp.dest(dist+'/js/'));
        // .pipe(browsersync.stream());
 });
 
@@ -103,7 +104,7 @@ gulp.task('sprite', function (cb) {
         cssName: 'sprite.scss'
     }));
 
-    spriteData.img.pipe(gulp.dest('build/images/'));
+    spriteData.img.pipe(gulp.dest(dist+'/images/'));
     spriteData.css.pipe(gulp.dest('./src/styles/global/'));
     cb();
 });
@@ -115,7 +116,7 @@ gulp.task('sprite', function (cb) {
 
 gulp.task('copy:fonts', function () {
     return gulp.src('./src/fonts/**/*.*')
-        .pipe(gulp.dest('./build/fonts'));
+        .pipe(gulp.dest(dist+'/fonts'));
 });
 
 
@@ -132,7 +133,7 @@ gulp.task('copy:images', function () {
             showFiles: true
         })) */
         .pipe(plumber())
-        .pipe(gulp.dest('./build/images')) 
+        .pipe(gulp.dest(dist+'/images')) 
         .pipe(imagemin([
             imageminGifsicle({
                 interlaced: true
@@ -151,7 +152,7 @@ gulp.task('copy:images', function () {
                 }]
             })
         ]))
-        .pipe(gulp.dest('./build/images')); //И бросим в prodaction отпимизированные изображения
+        .pipe(gulp.dest(dist+'/images')); //И бросим в prodaction отпимизированные изображения
 });
 
 
@@ -167,7 +168,7 @@ gulp.task('copy', gulp.parallel('copy:fonts', 'copy:images'));
 /* -------------Delete------------- */
 
 gulp.task('clean', function del(cb) {
-    return rimraf('build', cb)
+    return rimraf(dist, cb)
 });
 
 

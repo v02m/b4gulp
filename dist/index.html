@@ -1,23 +1,59 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-
-    <!-- Useful meta tags -->
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="">
-    <meta name="keywords" content="">
-    <meta name="robots" content="index, follow, noodp">
-    <meta name="googlebot" content="index, follow">
-    <meta name="google" content="notranslate">
-    <meta name="format-detection" content="telephone=no">
-
-    <title>Home</title>
-</head>
-<body>
-    <div class="container">
-        <p>Bootstrap</p>
+<html lang="ru">
+  <head>
+    <meta charset="utf-8">
+    <meta name="description" content="Super Page Here">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>
+    </title>
+    <link href="css/main.min.css" rel="stylesheet">
+  </head>
+  <body>
+    <!--
+    begin project
+    Edit important meta(name='description', content='Super Page Here')
+    
+    -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+      <div class="container"><a class="navbar-brand" href="#"> <img src="../../images/logo.png"></a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo01" aria-controls="navbarTogglerDemo01" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
+        <div class="collapse navbar-collapse" id="navbarTogglerDemo01">
+          <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+            <li class="nav-item active"><a class="nav-link" href="#">Home<span class="sr-only">(current)</span></a></li>
+            <li class="nav-item"><a class="nav-link" href="#">About</a></li>
+            <li class="nav-item"><a class="nav-link" href="#">Contact</a></li>
+          </ul>
+          <form class="form-inline my-2 my-lg-0">
+            <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+            <button class="btn btn-outline-warning my-2 my-sm-0" type="submit">Search</button>
+          </form>
+        </div>
+      </div>
+    </nav>
+    <div class="header d-flex flex-column justify-content-center align-items-center">
+      <div class="container">
+        <h1 class="display-2">Best website on Bootstrap 4</h1>
+        <p class="lead"> Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor. Duis mollis, est non commodo luctus.</p>
+      </div>
     </div>
-
-</body>
+    <div class="main">
+      <div class="container">
+        <div class="row">
+          <div class="col-4">
+            <div class="card" style="width: 18rem;"><img class="card-img-top" src="../../images/photo-1.jpg" alt="Card image cap">
+              <div class="card-body">
+                <h5 class="card-title">Card title</h5>
+                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p><a class="btn btn-primary" href="#">Go somewhere</a>
+              </div>
+            </div>
+          </div>
+          <div class="col-4">2</div>
+          <div class="col-4">3</div>
+        </div>
+      </div>
+    </div>
+    <!-- JS-->
+    <script src="js/main.js"></script>
+  </body>
 </html>
