@@ -111,17 +111,6 @@ gulp.task('sprite', function (cb) {
 
 
 
-
-/* ----------------Copy fonts----------------- */
-
-gulp.task('copy:fonts', function () {
-    return gulp.src(src+'/fonts/**/*.*')
-        .pipe(gulp.dest(dist+'/fonts'));
-});
-
-
-
-
 /* ----------------Copy images----------------- */
 
 gulp.task('copy:images', function () {
@@ -150,9 +139,16 @@ gulp.task('copy:images', function () {
                 }]
             })
         ]))
-        .pipe(gulp.dest(dist+'/images')); //И бросим в prodaction отпимизированные изображения
+        .pipe(gulp.dest(dist+'/images'));
 });
 
+
+/* ----------------Copy fonts----------------- */
+
+gulp.task('copy:fonts', function () {
+    return gulp.src(src + '/fonts/**/*.*')
+        .pipe(gulp.dest(dist + '/fonts'));
+});
 
 
 
