@@ -3,11 +3,8 @@ include ../units/mixins
 .main
     .container
             .row
-                .col-3
+                .col-lg-3.order-3.order-lg-1
                     +card1(imgAuthor, 'Card image cap', 'About me')
-
-
-
 
                     h3 Subscribe
                     .block.mb-2
@@ -19,16 +16,20 @@ include ../units/mixins
 
 
 
-                .col-6
+
+
+                .col-lg-6.col-md-8.order-1.order-ld-2
                     +card2(imgPhoto1, 'Card image cap', 'Post title', 'Read more', smallText)
                     +card2(imgPhoto2, 'Card image cap', 'AutorGood', 'Read more', smallText2)
                     +card2(imgPhoto3, 'Card image cap', 'AutorGood', 'Read more', smallText3)
 
                     +pagiNation(pageLink)
-                    
 
 
-                .col-3
+
+
+
+                .col-lg-3.col-md-4.order-2.order-lg-3
                     .list-group.mt-4.mb-4
                         a.list-group-item.list-group-item-action.active(href='#') #{Section1}
                         a.list-group-item.list-group-item-action(href='#') #{Section2}

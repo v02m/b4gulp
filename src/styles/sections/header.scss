@@ -4,4 +4,21 @@
     background-size: cover;
     color: $white;
     text-align: center;
+
+    @media (max-width: 1199px) {
+        .display-2 {
+            font-size: 3.5rem;
+        }
+    }
+    @media (max-width: 991px) {
+        .display-2 {
+            font-size: 3rem;
+        }
+    }
+    @media (max-width: 767px) {
+        height: 300px;
+        .display-2 {
+            font-size: 2rem;
+        }
+    }
 }

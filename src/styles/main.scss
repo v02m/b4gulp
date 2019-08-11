@@ -1,3 +1,5 @@
+@import "global/variables";
+
 @import "../../node_modules/bootstrap/scss/bootstrap-reboot.scss";
 @import "../../node_modules/bootstrap/scss/variables.scss";
 @import "../../node_modules/bootstrap/scss/_utilities.scss";
@@ -23,10 +25,11 @@
 
 
 
-@import "../styles/global/variables";
 
-@import "../styles/sections/navbar";
-@import "../styles/sections/header";
-@import "../styles/sections/mainSection";
-@import "../styles/sections/footer";
+
+@import "sections/navbar";
+@import "sections/header";
+@import "sections/mainSection";
+@import "sections/footer";
+@import "sections/copyright";
 
