@@ -1,0 +1,26 @@
+body {
+    background: $gray-200;
+}
+
+.block {
+    padding: 1rem;
+    background-color: $white;
+    border-radius: $border-radius;
+    box-shadow: 0px 1px 2px rgba(0, 0, 0, .5);
+}
+
+
+li>a {
+    color: $black !important;
+}
+
+li:nth-child(2) a {
+    background: rgba(228, 12, 12, 0.733);
+    color: $white !important;
+}
+
+
+
+
+
+

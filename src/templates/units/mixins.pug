@@ -1,0 +1,43 @@
+include variables
+
+mixin cardText(txtHere)
+    p.card-text #{txtHere}
+
+mixin smallText(smallText)
+    p.card-text
+            small.text-muted #{smallText}
+
+
+mixin card1(imgSrc, alt, cardTitle)
+    .card.mt-4.mb-4
+        img.card-img-top(src=imgSrc alt=alt)
+        .card-body
+            h5.card-title #{cardTitle}
+            +cardText(txtHere1)
+            +cardText(txtHere2)
+
+mixin card2(imgSrc, alt, cardTitle, readMore, smText)
+    .card.mt-4.mb-4
+        img.card-img-top(src=imgSrc alt=alt)
+        .card-body
+            h5.card-title #{cardTitle}
+            +cardText(txtHere3)
+            +smallText(smText)
+            a.btn.btn-outline-primary.btn-sm(href="#")=readMore
+
+
+
+mixin pagiNation(pageLink)
+    nav(aria-label="Page navigation example")
+        ul.pagination
+            each pl in pageLink
+                li.page-item
+                    a.page-link(href='#')=pl
+
+
+
+
+
+
+
+

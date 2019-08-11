@@ -1,20 +1,63 @@
+include ../units/variables
+include ../units/mixins
 .main
     .container
             .row
-                .col-4
-                    .card(style='width: 18rem;')
-                        img.card-img-top(src='../../images/photo-1.jpg' alt='Card image cap')
-                        .card-body
-                            h5.card-title Card title
-                            p.card-text Some quick example text to build on the card title and make up the bulk of the card's content.
-                            a.btn.btn-primary(href='#') Go somewhere
-
-
-                .col-4 2
-                .col-4 3
+                .col-3
+                    +card1(imgAuthor, 'Card image cap', 'About me')
 
 
 
 
+                    h3 Subscribe
+                    .block.mb-2
+                        form(method="post" action="/")
+                            .form-group
+                                input.form-control#exampleInputEmail1(type='email' aria-describedby='emailHelp' placeholder='Enter email')
+                                small#emailHelp.form-text.text-muted We'll never share your email with anyone else.
+                            button.btn.btn-success.btn-block(type='submit') Subscribe
 
 
+
+                .col-6
+                    +card2(imgPhoto1, 'Card image cap', 'Post title', 'Read more', smallText)
+                    +card2(imgPhoto2, 'Card image cap', 'AutorGood', 'Read more', smallText2)
+                    +card2(imgPhoto3, 'Card image cap', 'AutorGood', 'Read more', smallText3)
+
+                    +pagiNation(pageLink)
+                    
+
+
+                .col-3
+                    .list-group.mt-4.mb-4
+                        a.list-group-item.list-group-item-action.active(href='#') #{Section1}
+                        a.list-group-item.list-group-item-action(href='#') #{Section2}
+                        a.list-group-item.list-group-item-action(href='#') #{Section3}
+                        a.list-group-item.list-group-item-action(href='#') #{Section4}
+                        a.list-group-item.list-group-item-action(href='#') #{Section5}
+                    
+                    h3 Tags Cloud
+                    .block.mb-4
+                        a.badge.badge-info.mr-2(href="#") travel
+                        a.badge.badge-info.mr-2(href="#") rest
+                        a.badge.badge-info.mr-2(href="#") mountain
+                        a.badge.badge-info.mr-2(href="#") world
+                        a.badge.badge-info.mr-2(href="#") nature
+                        a.badge.badge-info.mr-2(href="#") photos
+                    
+
+                    h3 Gallery
+                    .block
+                        .row.no-gutters
+                            .col-6
+                                img.img-fluid(src="../../images/gallery-1.jpg" alt="")
+                            .col-6
+                                img.img-fluid(src="../../images/gallery-2.jpg" alt="")
+                            .col-6
+                                img.img-fluid(src="../../images/gallery-3.jpg" alt="")
+                            .col-6
+                                img.img-fluid(src="../../images/gallery-4.jpg" alt="")
+                            .col-6
+                                img.img-fluid(src="../../images/gallery-5.jpg" alt="")
+                            .col-6
+                                img.img-fluid(src="../../images/gallery-6.jpg" alt="")
